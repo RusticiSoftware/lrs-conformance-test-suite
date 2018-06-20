@@ -48,6 +48,7 @@ const specConfig = require('../specConfig');
             /* See [RFC-3986](http://tools.ietf.org/html/rfc3986#page-17) */
             endpoint: Joi.string().regex(/^[a-zA-Z][a-zA-Z0-9+\.-]*:.+/, 'URI').required(),
             grep: Joi.string(),
+            invert: Joi.boolean(),
             optional: Joi.array().items(Joi.string().required()),
             basicAuth: Joi.any(true, false),
             oAuth1: Joi.any(true, false),
@@ -156,6 +157,7 @@ const specConfig = require('../specConfig');
             authPass: _options.authPass,
             reporter: _options.reporter,
             grep: _options.grep,
+            invert: _options.invert,
             optional: _options.optional,
             bail: _options.bail,
             consumer_key: _options.consumer_key,
@@ -177,6 +179,7 @@ const specConfig = require('../specConfig');
             reporter: processMessageReporter(process),
             timeout: '15000',
             grep: grep,
+            invert: options.invert,
             bail: options.bail
         });
 
@@ -188,6 +191,9 @@ const specConfig = require('../specConfig');
         `);
 
         console.log("Grep is " + grep);
+        if (options.invert) {
+            console.log("Invert is " + options.invert);
+        }
         process.env.DIRECTORY = options.directory[0];
 
         // Adds optional tests to the front in ascending order.
