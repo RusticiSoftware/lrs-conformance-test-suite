@@ -50,7 +50,7 @@ var options = {
     auth_token_path: program.auth_token_path,
     authorization_path: program.authorization_path,
     grep: program.grep,
-        invert: program.invert,
+    invert: program.invert,
     bail: program.bail,
     directory: program.directory,
     errors: program.errors
