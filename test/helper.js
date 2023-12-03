@@ -261,7 +261,7 @@ if (!process.env.EB_NODE_COMMAND) {
                             } else if (id && result.statements && stmtFound(result.statements, id)) {
                             //if we find a block of statements and the id we are looking for, then we're good and we can continue with the testing
                                 p.resolve();
-                            } else if ((new Date(res.headers['x-experience-api-consistent-through'])).valueOf() + module.exports.getTimeMargin() >= time) {
+                            } else if ((new Date(res.headers['x-experience-api-consistent-through'])).valueOf() + module.exports.getTimeMargin() >= time + 1000) {
                             //if the desired statement has not been found, we check the con-thru header to find if the lrs is up to date and we should move on
                                 p.resolve();
                             } else {
