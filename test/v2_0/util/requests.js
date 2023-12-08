@@ -112,12 +112,11 @@ const requests = {
      * @returns {Promise<axiosBase.AxiosResponse>} The LRS's simplified response.
      */
     getStatementExactPromise: async(id, headerOverrides) => {
-        let endpoint = joinPaths(LRS_ENDPOINT, PATH_STATEMENTS);
         let params = {
             statementId: id
         };
 
-        return requests.getDocuments(endpoint, params, {
+        return requests.getDocuments(PATH_STATEMENTS, params, {
             headers: headerOverrides
         })
         .catch(error => error.response);
@@ -384,6 +383,40 @@ const requests = {
         let query = "?" + oldHelpers.getUrlEncoding(params);
 
         return axios.post(endpoint + query, document, {
+            headers: headerOverrides
+        })
+        .catch(err => err.response);
+    },
+
+    /**
+     * POST a generic document to a generic resource path.
+     * @param {any | null} document Document to send.
+     * @param {Object} params Query parameters for the request.
+     * @param {Object} headerOverrides Optional headers to override for this request.
+     * @returns {Promise<axiosBase.AxiosResponse>} The LRS's simplified response.
+     */
+    postToStatements: async(document, params, headerOverrides) => {
+        let endpoint = joinPaths(LRS_ENDPOINT, PATH_STATEMENTS);
+        let query = "?" + oldHelpers.getUrlEncoding(params);
+
+        return axios.post(endpoint + query, document, {
+            headers: headerOverrides
+        })
+        .catch(err => err.response);
+    },
+
+    /**
+     * POST a generic document to a generic resource path.
+     * @param {any | null} document Document to send.
+     * @param {Object} params Query parameters for the request.
+     * @param {Object} headerOverrides Optional headers to override for this request.
+     * @returns {Promise<axiosBase.AxiosResponse>} The LRS's simplified response.
+     */
+    putToStatements: async(document, params, headerOverrides) => {
+        let endpoint = joinPaths(LRS_ENDPOINT, PATH_STATEMENTS);
+        let query = "?" + oldHelpers.getUrlEncoding(params);
+
+        return axios.put(endpoint + query, document, {
             headers: headerOverrides
         })
         .catch(err => err.response);
