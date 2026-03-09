@@ -6,8 +6,8 @@
 (function (module, fs, extend, moment, request, requestPromise, chai, liburl, Joi, helper, multipartParser, redirect) {
     // "use strict";
 
-
-    const REG_ALLOWED_VERSIONS = /^2\.0\.0$|^1\.0(\.[1-3])$/;
+    // Must include 0.9 or 0.95 since they can be returned in a 400 status code
+    const REG_ALLOWED_VERSIONS = /^2\.0\.0$|^1\.0(\.[1-3])$|^0\.95?$/;
 
     var expect = chai.expect;
     if(global.OAUTH)
