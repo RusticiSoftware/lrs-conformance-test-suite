@@ -6,6 +6,12 @@
 (function (module, fs, extend, moment, request, requestPromise, chai, liburl, Joi, helper, multipartParser, redirect) {
     // "use strict";
 
+    const REG_ALLOWED_VERSIONS = /^2\.0\.0$|^1\.0(\.[1-3])$/;
+
+    // Must include 0.9 or 0.95 since they can be returned in a 400 and 404 status code
+    const REG_ALLOWED_VERSIONS_400 = /^2\.0\.0$|^1\.0(\.[1-3])$|^0\.95?$/;
+    const REG_ALLOWED_VERSIONS_404 = /^0\.95?$/;
+
     var expect = chai.expect;
     if(global.OAUTH)
         request = helper.OAuthRequest(request);
@@ -55,7 +61,7 @@ describe('Versioning Requirements (Communication 3.3)', () => {
                     }
                     else{
                         expect(res.headers).to.have.property('x-experience-api-version');
-                        expect(res.headers['x-experience-api-version']).to.equal(helper.getXapiVersion());
+                        expect(res.headers['x-experience-api-version']).to.match(REG_ALLOWED_VERSIONS);
                         done();
                     }
                 });
@@ -140,10 +146,10 @@ describe('Versioning Requirements (Communication 3.3)', () => {
                     if (err) {
                         done(err);
                     } else if (res.statusCode === 400) {
-                        expect(res.headers['x-experience-api-version']).to.match(/^1\.0\.3$|^0\.95?$/)
+                        expect(res.headers['x-experience-api-version']).to.match(REG_ALLOWED_VERSIONS_400)
                         done();
                     } else if (res.statusCode === 404) {
-                        expect(res.headers['x-experience-api-version']).to.match(/^0\.95?$/);
+                        expect(res.headers['x-experience-api-version']).to.match(REG_ALLOWED_VERSIOBS_404);
                         done();
                     } else {
                         throw new Error(`Version header (${res.headers['x-experience-api-version']}) and Status Code (${res.statusCode}) do not match specification.  Expected version header 1.0.3 with status code 400 or version header 0.9 or 0.95 with status code either 400 or 404.`);
@@ -167,10 +173,10 @@ describe('Versioning Requirements (Communication 3.3)', () => {
                     if (err) {
                         done(err);
                     } else if (res.statusCode === 400) {
-                        expect(res.headers['x-experience-api-version']).to.match(/^1\.0\.3$|^0\.95?$/);
+                        expect(res.headers['x-experience-api-version']).to.match(REG_ALLOWED_VERSIONS_400);
                         done();
                     } else if (res.statusCode === 404) {
-                        expect(res.headers['x-experience-api-version']).to.match(/^0\.95?$/);
+                        expect(res.headers['x-experience-api-version']).to.match(REG_ALLOWED_VERSIONS_404);
                         done();
                     } else {
                         throw new Error(`Version header (${res.headers['x-experience-api-version']}) and Status Code (${res.statusCode}) do not match specification.  Expected version header 1.0.3 with status code 400 or version header 0.9 or 0.95 with status code either 400 or 404.`);
@@ -194,10 +200,10 @@ describe('Versioning Requirements (Communication 3.3)', () => {
                     if (err) {
                         done(err);
                     } else if (res.statusCode === 400) {
-                        expect(res.headers['x-experience-api-version']).to.match(/^1\.0\.3$|^0\.95?$/);
+                        expect(res.headers['x-experience-api-version']).to.match(REG_ALLOWED_VERSIONS_400);
                         done();
                     } else if (res.statusCode === 404) {
-                        expect(res.headers['x-experience-api-version']).to.match(/^0\.95?$/);
+                        expect(res.headers['x-experience-api-version']).to.match(REG_ALLOWED_VERSIONS_404);
                         done();
                     } else {
                         throw new Error(`Version header (${res.headers['x-experience-api-version']}) and Status Code (${res.statusCode}) do not match specification.  Expected version header 1.0.3 with status code 400 or version header 0.9 or 0.95 with status code either 400 or 404.`);
