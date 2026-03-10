@@ -567,6 +567,7 @@ if (!process.env.EB_NODE_COMMAND) {
                                 var result = JSON.parse(res.body);
                                 lrsTime = new Date(result.stored);
                                 TIME_MARGIN = suiteTime - lrsTime;
+                                // console.log("TimeMargin set to " + TIME_MARGIN);
                                 done(err, TIME_MARGIN);
                             } else {
                                 setTimeout(redo, 2000);
