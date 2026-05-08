@@ -2725,6 +2725,10 @@ describe('Statement Resource Requirements (Communication 2.1)', () => {
         var sinceVoidingTime, untilVoidingTime;
         var stmtTime, prevStmtTime;
 
+        before("Update TimeMargin to better reflect current time differential between test suite and lrs", function (done) {
+            helper.setTimeMargin(done);
+        });
+
         before('persist voided statement', function (done) {
             // console.log(new Date(Date.now() - helper.getTimeMargin()).toISOString() + ' Ed Before');
             sinceVoidingTime = new Date(Date.now() - helper.getTimeMargin() - 4000).toISOString();
