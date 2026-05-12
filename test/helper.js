@@ -954,6 +954,15 @@ if (!process.env.EB_NODE_COMMAND) {
                 '3QIDAQAB',
                 '-----END PUBLIC KEY-----'
             ].join('\n');
+        },
+        validateHttpDate: function(dateStr)
+        {
+            const httpDateRegex = /^[A-Z][a-z]{2}, \d{2} [A-Z][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} GMT$/;
+
+            if (!httpDateRegex.test(dateStr)) return false;
+        
+            const parsed = new Date(dateStr);
+            return !isNaN(parsed.getTime());
         }
     };
 

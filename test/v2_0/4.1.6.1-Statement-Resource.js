@@ -269,8 +269,9 @@ describe('Statement Resource Requirements (Communication 2.1)', () => {
 
                     let lastModifiedStr = getResponse.headers.get("last-modified");
                     let lastModified = Date.parse(lastModifiedStr);
-                    expect(lastModified).to.not.eql(Number.NaN,
-                        `The Last-Modified header could not be parsed -- received: ${lastModifiedStr}`
+                    let lastModifiedDateValid = helper.validateHttpDate(lastModifiedStr);
+                    expect(lastModifiedDateValid).to.not.eql(false,
+                        `The Last-Modified header could not be parsed or was not an HttpDate (RFC 7231) -- received: ${lastModifiedStr}`
                     );
                     
                     let retrievedStatement = getResponse.data;

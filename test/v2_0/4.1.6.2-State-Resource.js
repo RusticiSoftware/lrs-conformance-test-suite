@@ -772,6 +772,16 @@ describe('State Resource Requirements (Communication 2.3)', function () {
             expect(modifiedDate).to.not.be.NaN;
         });
 
+        it("Returns a Last-Modified header that is in compliance with RFC 7231 (HttpDate)", async() => {
+
+            let res = await xapiRequests.getDocuments(resourcePath, resourceParams);
+
+            let modifiedStr = res.headers.get("last-modified");
+            let modifiedDateValid = helper.validateHttpDate(modifiedStr);
+
+            expect(modifiedDateValid).to.be.true;
+        });
+
         it("Updates the Last-Modified value when the corresponding document is updated.", async() => {
 
             let originalDocRes = await xapiRequests.getDocuments(resourcePath, resourceParams);
